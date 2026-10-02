@@ -1,0 +1,1714 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modelo Operacional ServiceNow COEI</title>
+  <meta name="description" content="ServiceNow COEI Operating Model — Aoop, an NTT DATA Company.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M2 13h20"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/><path d="m13 12 3 3-3 3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.59 7.59"/><circle cx="11" cy="11" r="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2"/></symbol>
+  <symbol id="i-upgrade" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-chevrons" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4M9 4h6M8 14h.01M16 14h.01M9 17h6"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16v-3M12 16V9M17 16v-6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6M12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.97 5c0 2.1-1.6 3.8-3.5 4M22 13h-4M17.2 17c2.1.1 3.8 1.9 3.8 4"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/></symbol>
+</svg>
+
+<!-- ============ TOP BAR (mobile) ============ -->
+<header class="topbar">
+  <button class="icon-btn" id="menuOpen" aria-label="Abrir menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+  <span class="topbar-title">Modelo Operacional ServiceNow COEI</span>
+  <img class="topbar-logo" src="aoop.png" alt="Aoop">
+</header>
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar" id="sidebar" aria-label="Navegação">
+  <div class="sb-head">
+    <a href="#agenda" class="brand" aria-label="Ir para a Agenda">
+      <img class="brand-logo" src="aoop.png" alt="Aoop — An NTT DATA Company">
+      <span class="brand-mark" aria-hidden="true">A</span>
+    </a>
+    <button class="icon-btn sb-close" id="menuClose" aria-label="Fechar menu"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+
+  <nav class="nav">
+    <a href="#agenda" data-nav="agenda" data-tip-nav="Agenda"><svg class="ic"><use href="#i-list"/></svg><span>Agenda</span></a>
+    <a href="#cap-01" data-nav="operating-model" data-tip-nav="Modelo Operacional"><svg class="ic"><use href="#i-target"/></svg><span><em>01</em>Modelo Operacional</span></a>
+    <a href="#cap-02" data-nav="platform" data-tip-nav="Platform Operations"><svg class="ic"><use href="#i-layers"/></svg><span><em>02</em>Platform Operations</span></a>
+    <a href="#cap-03" data-nav="coe" data-tip-nav="Center of Excellence"><svg class="ic"><use href="#i-compass"/></svg><span><em>03</em>Center of Excellence</span></a>
+    <a href="#cap-04" data-nav="innovation" data-tip-nav="Innovation"><svg class="ic"><use href="#i-bulb"/></svg><span><em>04</em>Innovation</span></a>
+    <a href="#cap-05" data-nav="value" data-tip-nav="Valor e resultados"><svg class="ic"><use href="#i-bars"/></svg><span><em>05</em>Valor e resultados</span></a>
+    <a href="#cap-06" data-nav="tom" data-tip-nav="Conclusão"><svg class="ic"><use href="#i-grid"/></svg><span><em>06</em>Conclusão</span></a>
+  </nav>
+
+  <div class="sb-foot">
+    <span class="sb-foot-label">Modelo COEI</span>
+    <button class="collapse-btn" id="collapseBtn" aria-label="Recolher menu"><svg class="ic"><use href="#i-chevrons"/></svg></button>
+  </div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<!-- ============ DECK ============ -->
+<main class="deck" id="deck">
+
+  <!-- =====================================================
+       01 · AGENDA
+       ===================================================== -->
+  <section class="slide slide--agenda" id="agenda" data-nav="agenda" data-title="Agenda">
+    <div class="wrap">
+      <div class="agenda">
+        <div class="agenda-cover reveal">
+          <img class="agenda-logo" src="aoop.png" alt="Aoop — An NTT DATA Company">
+          <p class="eyebrow">Proposta</p>
+          <h1>Modelo Operacional ServiceNow COEI</h1>
+          <p class="lead">Um modelo operacional global para governar, operar, escalar e evoluir o ecossistema ServiceNow.</p>
+        </div>
+
+        <nav class="agenda-list" aria-label="Capítulos">
+          <a href="#cap-01" class="reveal"><span class="ag-num">01</span><span class="ag-name">Modelo Operacional</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          <a href="#cap-02" class="reveal"><span class="ag-num">02</span><span class="ag-name">Platform Operations</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          <a href="#cap-03" class="reveal"><span class="ag-num">03</span><span class="ag-name">Center of Excellence</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          <a href="#cap-04" class="reveal"><span class="ag-num">04</span><span class="ag-name">Innovation</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          <a href="#cap-05" class="reveal"><span class="ag-num">05</span><span class="ag-name">Valor e resultados</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          <a href="#cap-06" class="reveal"><span class="ag-num">06</span><span class="ag-name">Conclusão</span><svg class="ic"><use href="#i-arrow-right"/></svg></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 01
+       ===================================================== -->
+  <section class="slide slide--cover c-coe" id="cap-01" data-nav="operating-model" data-title="Capítulo 01 · Modelo Operacional" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 01 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Modelo Operacional</h2>
+          <p class="cover-q reveal">Como organizamos o ecossistema?</p>
+          <ol class="cover-topics reveal" data-topics="operating-model"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">01</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="operating-model" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       02 · SERVICENOW OPERATING MODEL
+       ===================================================== -->
+  <section class="slide slide--hero" id="operating-model" data-nav="operating-model" data-title="Visão do Modelo Operacional">
+    <div class="wrap">
+      <header class="hero-head reveal">
+        <p class="eyebrow">01 · Modelo Operacional</p>
+        <h2 class="hero-title">Modelo Operacional ServiceNow</h2>
+        <p class="lead">Uma governança. Dois domínios globais. Uma plataforma.</p>
+      </header>
+
+      <div class="model reveal" data-wires="gov>it,gov>biz,gov>plat|v,it>plat|vd,biz>plat|vd">
+        <svg class="wires" aria-hidden="true"></svg>
+
+        <div class="model-gov" data-node="gov">
+          <div class="gov-pill">
+            <span class="gov-icon"><svg class="ic"><use href="#i-compass"/></svg></span>
+            <span><strong>ServiceNow Governance</strong><small>COE Managers + Platform Manager</small></span>
+          </div>
+        </div>
+
+        <div class="model-row">
+          <a href="#coe" class="coe-card" data-node="it">
+            <div class="coe-card-top">
+              <span class="tile-icon"><svg class="ic"><use href="#i-monitor"/></svg></span>
+              <span class="coe-tag">Domínio global</span>
+            </div>
+            <h3>COE IT</h3>
+            <p class="coe-desc">Governa as soluções ServiceNow que suportam TI.</p>
+            <ul class="product-chips">
+              <li data-tip="IT Service Management">ITSM</li>
+              <li data-tip="IT Operations Management">ITOM</li>
+              <li data-tip="IT Asset Management">ITAM</li>
+              <li>App Engine / Aplicações de TI</li>
+            </ul>
+          </a>
+
+          <div class="model-gutter" aria-hidden="true"></div>
+
+          <a href="#coe" class="coe-card" data-node="biz">
+            <div class="coe-card-top">
+              <span class="tile-icon"><svg class="ic"><use href="#i-briefcase"/></svg></span>
+              <span class="coe-tag">Domínio global</span>
+            </div>
+            <h3>COE Business</h3>
+            <p class="coe-desc">Governa as soluções ServiceNow que suportam os processos de negócio.</p>
+            <ul class="product-chips">
+              <li data-tip="Customer Service Management">CSM</li>
+              <li data-tip="Strategic Portfolio Management">SPM</li>
+              <li>App Engine / Aplicações de Negócio</li>
+            </ul>
+          </a>
+        </div>
+
+        <a href="#platform-operations" class="platform-band" data-node="plat">
+          <div class="pb-left">
+            <span class="tile-icon tile-icon--plat"><svg class="ic"><use href="#i-layers"/></svg></span>
+            <div>
+              <span class="pb-kicker">Platform Operations</span>
+              <strong class="pb-title">Uma plataforma. Fundação compartilhada.</strong>
+            </div>
+          </div>
+          <p class="pb-text">Fundação técnica compartilhada pelos dois domínios.</p>
+          <span class="card-cta" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 02
+       ===================================================== -->
+  <section class="slide slide--cover c-plat" id="cap-02" data-nav="platform" data-title="Capítulo 02 · Platform Operations" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 02 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Platform Operations</h2>
+          <p class="cover-q reveal">Como protegemos e operamos a fundação?</p>
+          <ol class="cover-topics reveal" data-topics="platform"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">02</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="platform" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       03 · PLATFORM OPERATIONS
+       ===================================================== -->
+  <section class="slide slide--platform" id="platform-operations" data-nav="platform" data-title="Platform Operations">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--plat">02 · Platform Operations</p>
+          <h2>Uma plataforma. Fundação compartilhada.</h2>
+          <p class="sub">A estrutura transversal que mantém a plataforma ServiceNow pronta para todos os domínios.</p>
+        </div>
+      </div>
+
+      <div class="plat-layout">
+        <div class="plat-struct reveal">
+          <div class="plat-lead">
+            <div class="node node--plat-solid"><svg class="ic"><use href="#i-user"/></svg>Platform Manager</div>
+            <span class="plat-plus">+</span>
+            <div class="node node--dashed"><svg class="ic"><use href="#i-users"/></svg>Platform Specialists <small>conforme necessidade</small></div>
+          </div>
+          <div class="plat-stem" aria-hidden="true"></div>
+          <ul class="cap-grid">
+            <li><svg class="ic"><use href="#i-activity"/></svg>Saúde da plataforma</li>
+            <li><svg class="ic"><use href="#i-gauge"/></svg>Performance</li>
+            <li><svg class="ic"><use href="#i-eye"/></svg>Monitoramento</li>
+            <li><svg class="ic"><use href="#i-lock"/></svg>Segurança</li>
+            <li><svg class="ic"><use href="#i-key"/></svg>Licenciamento</li>
+            <li><svg class="ic"><use href="#i-copy"/></svg>Gestão de clones</li>
+            <li><svg class="ic"><use href="#i-upgrade"/></svg>Gestão de upgrades</li>
+            <li><svg class="ic"><use href="#i-grid"/></svg>Estratégia de instâncias</li>
+            <li><svg class="ic"><use href="#i-server"/></svg><span data-tip="ServiceNow MID Server e infraestrutura de suporte">MID / Infraestrutura</span></li>
+            <li><svg class="ic"><use href="#i-sparkle"/></svg>Housekeeping</li>
+          </ul>
+        </div>
+
+        <div class="plat-side reveal">
+          <h4 class="mini-title">Uma plataforma</h4>
+          <ul class="qualities">
+            <li><svg class="ic"><use href="#i-check"/></svg>saudável</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>segura</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>performática</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>escalável</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>monitorada</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>atualizada</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>financeiramente eficiente</li>
+          </ul>
+          <div class="callout c-plat">
+            <svg class="ic"><use href="#i-layers"/></svg>
+            <p><strong>Platform Operations cuida da plataforma</strong>, não dos produtos de negócio executados sobre ela.</p>
+          </div>
+          <p class="neq"><b>Platform Operations ≠ Support</b> Support cuida dos problemas operacionais das soluções e domínios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       03.1 · PLATFORM CAPABILITIES
+       ===================================================== -->
+  <section class="slide slide--soft" id="platform-capabilities" data-nav="platform" data-title="Platform Capabilities">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--plat">02 · Platform Operations · Platform Capabilities</p>
+          <h2>Platform Capabilities</h2>
+          <p class="sub">Visibilidade, observabilidade e controle sobre as capacidades técnicas que sustentam o ecossistema.</p>
+        </div>
+        <div class="own-strip own-strip--plat">
+          <span><small>Contexto</small>Platform Operations</span>
+          <svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span><small>Propósito</small>Visibilidade &amp; Controle</span>
+        </div>
+      </div>
+
+      <blockquote class="plat-msg reveal">
+        <p>Platform Operations não apenas mantém a plataforma.<br><span>Cria visibilidade, governança e controle sobre como o ecossistema opera.</span></p>
+      </blockquote>
+
+      <div class="pc-grid">
+        <article class="pc-card reveal">
+          <header>
+            <span class="pc-icon"><svg class="ic"><use href="#i-activity"/></svg></span>
+            <div>
+              <h3>Horizon Flow</h3>
+              <span class="pc-tag">Automation Intelligence</span>
+            </div>
+          </header>
+          <p class="pc-q">“How are our automations performing and how far can they scale?”</p>
+          <p class="pc-desc">Visibilidade sobre automações executadas na plataforma, permitindo analisar eficiência, qualidade e potencial de escala.</p>
+          <ul class="pc-dims">
+            <li>Execution</li><li>Volume</li><li>Quality</li>
+            <li>Performance</li><li>Efficiency</li><li>Scalability</li>
+          </ul>
+          <div class="pc-scale" aria-label="Escala de maturidade">
+            <span class="pc-steps"><i></i><i></i><i></i><i></i><i></i></span>
+            <small>Case Specific → Scale Potential → Scale Ready → Multi-Service → Global Ready</small>
+          </div>
+          <p class="pc-foot">Visibility over automation execution, quality, efficiency and scale potential.</p>
+        </article>
+
+        <article class="pc-card reveal">
+          <header>
+            <span class="pc-icon"><svg class="ic"><use href="#i-plug"/></svg></span>
+            <div>
+              <h3>Horizon Connect</h3>
+              <span class="pc-tag">Integration Observability &amp; Resilience</span>
+            </div>
+          </header>
+          <p class="pc-q">“Are the integrations sustaining our processes healthy?”</p>
+          <p class="pc-desc">Observabilidade e resiliência contínua para as integrações que sustentam os processos de negócio ServiceNow.</p>
+          <ul class="pc-dims">
+            <li>APIs</li><li>Executions</li><li>Failures</li>
+            <li>Retries</li><li>Performance</li><li>Ownership &amp; Impact</li>
+          </ul>
+          <p class="pc-foot">Observability and resilience for integrations that sustain business processes.</p>
+        </article>
+
+        <article class="pc-card reveal">
+          <header>
+            <span class="pc-icon"><svg class="ic"><use href="#i-zap"/></svg></span>
+            <div>
+              <h3>Horizon Relay</h3>
+              <span class="pc-tag">Automation Orchestration</span>
+            </div>
+          </header>
+          <p class="pc-q">“Are external automations executed in a controlled &amp; sustainable way?”</p>
+          <p class="pc-desc">Execução centralizada, governança e observabilidade de RPAs e automações externas no ecossistema.</p>
+          <ul class="pc-dims">
+            <li>Executions</li><li>Queues</li><li>Capacity</li>
+            <li>Failures</li><li>Ownership</li><li>Governance</li>
+          </ul>
+          <p class="pc-foot">Centralized automation execution and governance for a controlled operation.</p>
+        </article>
+      </div>
+
+      <div class="pc-outcome reveal">
+        <div class="pc-flow">
+          <span><b>Horizon Flow</b> <small>Automation Intelligence</small></span>
+          <span>+</span>
+          <span><b>Horizon Connect</b> <small>Integration Observability</small></span>
+          <span>+</span>
+          <span><b>Horizon Relay</b> <small>Automation Orchestration</small></span>
+        </div>
+        <svg class="ic pc-arrow"><use href="#i-arrow-right"/></svg>
+        <div class="pc-results">
+          <span>Visibility</span><span>Governance</span><span>Control</span><span>Resilience</span><span>Scale</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       04 · PLATFORM DELIVERABLES
+       ===================================================== -->
+  <section class="slide slide--soft" id="platform-deliverables" data-nav="platform" data-title="Entregáveis de Platform Operations">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--plat">02 · Platform Operations · Entregáveis</p>
+          <h2>Da operação para evidências e melhoria contínua.</h2>
+          <p class="sub">Platform Operations produz entregáveis concretos — não apenas atividades administrativas.</p>
+        </div>
+      </div>
+
+      <div class="deliv-layout">
+        <figure class="report reveal" id="perfReport" data-src="instance-performance-report.png">
+          <div class="report-doc">
+            <header class="rp-head">
+              <span class="rp-icon"><svg class="ic"><use href="#i-file"/></svg></span>
+              <div>
+                <strong>Relatório de performance da instância</strong>
+                <small>Platform Operations</small>
+              </div>
+              <span class="rp-tag">Exemplo ilustrativo</span>
+            </header>
+            <div class="rp-grid">
+              <section class="rp-card rp-card--wide">
+                <h5>Tendências de performance</h5>
+                <svg class="rp-spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="rp-area" d="M0 50 L25 46 L50 48 L75 38 L100 42 L125 30 L150 34 L175 26 L200 30 L225 22 L250 25 L275 18 L300 20 L300 70 L0 70Z"/>
+                  <path class="rp-line" d="M0 50 L25 46 L50 48 L75 38 L100 42 L125 30 L150 34 L175 26 L200 30 L225 22 L250 25 L275 18 L300 20"/>
+                  <path class="rp-line rp-line--2" d="M0 58 L25 57 L50 54 L75 56 L100 52 L125 53 L150 49 L175 51 L200 47 L225 48 L250 45 L275 46 L300 43"/>
+                </svg>
+              </section>
+              <section class="rp-card">
+                <h5>Transações lentas</h5>
+                <div class="rp-bars"><i style="--w:92%"></i><i style="--w:74%"></i><i style="--w:58%"></i><i style="--w:41%"></i></div>
+              </section>
+              <section class="rp-card">
+                <h5>Análise de banco de dados</h5>
+                <div class="rp-bars rp-bars--db"><i style="--w:80%"></i><i style="--w:63%"></i><i style="--w:47%"></i><i style="--w:30%"></i></div>
+              </section>
+              <section class="rp-card">
+                <h5>Jobs agendados</h5>
+                <div class="rp-jobs"><i></i><i class="hi"></i><i class="hi"></i><i></i><i></i><i class="hi"></i><i></i><i></i><i></i><i class="hi"></i><i></i><i></i></div>
+              </section>
+              <section class="rp-card">
+                <h5>Integrações</h5>
+                <ul class="rp-int"><li><i class="ok"></i>REST</li><li><i class="warn"></i>SOAP</li><li><i class="ok"></i>MID</li></ul>
+              </section>
+              <section class="rp-card rp-card--wide rp-findings">
+                <h5>Achados e recomendações</h5>
+                <ul>
+                  <li><i class="sev sev--h"></i><span>Consultas lentas em tabelas de alto volume</span><em>Revisar índices e filtros</em></li>
+                  <li><i class="sev sev--m"></i><span>Jobs concorrentes em horário de pico</span><em>Redistribuir agenda</em></li>
+                  <li><i class="sev sev--l"></i><span>Timeouts recorrentes em integração</span><em>Ajustar retry e payload</em></li>
+                </ul>
+              </section>
+            </div>
+          </div>
+          <img class="report-img" alt="Relatório de performance da instância">
+        </figure>
+
+        <div class="deliv-side">
+          <ul class="deliv-grid">
+            <li class="reveal"><svg class="ic"><use href="#i-clipboard"/></svg><strong>Avaliação de saúde da plataforma</strong><span>Health Scan · achados · riscos · recomendações</span></li>
+            <li class="reveal"><svg class="ic"><use href="#i-key"/></svg><strong>Licenciamento e consumo</strong><span>Uso · tendências · otimização · previsão</span></li>
+            <li class="reveal"><svg class="ic"><use href="#i-shield"/></svg><strong>Segurança e governança de acessos</strong><span>Acessos, roles e conformidade</span></li>
+            <li class="reveal"><svg class="ic"><use href="#i-upgrade"/></svg><strong>Prontidão para upgrade</strong><span>Impactos, riscos e plano de upgrade</span></li>
+            <li class="reveal"><svg class="ic"><use href="#i-eye"/></svg><strong>Monitoramento da plataforma</strong><span>Alertas, disponibilidade e tendências</span></li>
+            <li class="reveal"><svg class="ic"><use href="#i-grid"/></svg><strong>Estratégia de instâncias</strong><span>Instâncias, ambientes e clones</span></li>
+          </ul>
+
+          <div class="cycle reveal" aria-label="Monitorar, analisar, recomendar, melhorar">
+            <span class="cycle-label"><svg class="ic"><use href="#i-loop"/></svg>Ciclo contínuo</span>
+            <ol class="cycle-steps">
+              <li>Monitorar</li><li>Analisar</li><li>Recomendar</li><li>Melhorar</li>
+            </ol>
+          </div>
+
+          <button type="button" class="deliv-link reveal" data-modal="modal-perf">
+            <svg class="ic"><use href="#i-file"/></svg>
+            <span><small>Exemplo de entregável</small>Comparativo de performance · Ambev e ABI</span>
+            <svg class="ic"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 03
+       ===================================================== -->
+  <section class="slide slide--cover c-coe" id="cap-03" data-nav="coe" data-title="Capítulo 03 · Center of Excellence" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 03 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Center of Excellence</h2>
+          <p class="cover-q reveal">Como estabelecemos ownership e governança — e operamos, evoluímos e entregamos mudanças?</p>
+          <ol class="cover-topics reveal" data-topics="coe"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">03</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="coe" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       05 · CENTER OF EXCELLENCE
+       ===================================================== -->
+  <section class="slide" id="coe" data-nav="coe" data-title="Modelo Operacional do COE">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">03 · Center of Excellence</p>
+          <h2>Modelo Operacional do COE</h2>
+          <p class="sub">Como cada COE governa seu domínio e organiza Support, Sustain e Delivery.</p>
+        </div>
+      </div>
+
+      <div class="coe-layout">
+        <div class="coe-model reveal" data-wires="lead>m1,lead>m2,lead>m3">
+          <svg class="wires" aria-hidden="true"></svg>
+
+          <div class="lead" data-node="lead" data-wires="mgr>ra,mgr>rb">
+            <svg class="wires" aria-hidden="true"></svg>
+            <div class="lead-top">
+              <div class="mgr-card" data-node="mgr">
+                <span class="mgr-own">Ownership ABI</span>
+                <div class="mgr-head">
+                  <span class="mgr-icon"><svg class="ic"><use href="#i-target"/></svg></span>
+                  <div>
+                    <strong>COE Manager</strong>
+                    <span class="mgr-concept">Direção e ownership</span>
+                  </div>
+                </div>
+                <p class="role-q">O que é prioridade para o domínio?</p>
+                <p class="role-keys">Direção · prioridades · investimento · stakeholders · patrocínio</p>
+              </div>
+            </div>
+            <div class="lead-pair">
+              <div class="lead-role" data-node="ra">
+                <div class="lr-head"><span class="tile-icon"><svg class="ic"><use href="#i-pen"/></svg></span><div><strong>Architect</strong><span class="lr-concept">Arquitetura e qualidade</span></div></div>
+                <p class="role-q">Como devemos construir e evoluir as soluções?</p>
+                <p class="role-keys">Arquitetura · padrões · solution assurance · ARB · technical debt</p>
+              </div>
+              <div class="lead-role" data-node="rb">
+                <div class="lr-head"><span class="tile-icon"><svg class="ic"><use href="#i-users"/></svg></span><div><strong>Engagement Manager</strong><span class="lr-concept">Delivery e governança</span></div></div>
+                <p class="role-q">Como organizamos a execução e a capacidade?</p>
+                <p class="role-keys">Portfólio · capacidade · delivery · dependências · riscos · cadência de governança</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tri tri--compact">
+            <div class="tri-col c-support" data-node="m1">
+              <h4><svg class="ic"><use href="#i-headset"/></svg>Support</h4>
+              <span class="tri-by"><small>organizado por</small>Domínio</span>
+              <p>Opera o domínio.</p>
+            </div>
+            <div class="tri-col c-sustain" data-node="m2">
+              <h4><svg class="ic"><use href="#i-refresh"/></svg>Sustain</h4>
+              <span class="tri-by"><small>organizado por</small>Produto</span>
+              <p>Evolui o produto.</p>
+            </div>
+            <div class="tri-col c-project" data-node="m3">
+              <h4><svg class="ic"><use href="#i-rocket"/></svg>Delivery</h4>
+              <span class="tri-by"><small>organizado por</small>Mudança</span>
+              <p>Executa mudanças com squads flexíveis.</p>
+            </div>
+          </div>
+          <p class="gov-exec"><b>O COE governa o delivery.</b><span>As squads executam o trabalho.</span><span>O SStudio dá visibilidade ponta a ponta.</span></p>
+        </div>
+
+        <div class="coe-domains">
+          <article class="domain-card reveal">
+            <header><span class="tile-icon"><svg class="ic"><use href="#i-monitor"/></svg></span><h3>COE IT</h3><span class="dc-mgr">COE Manager IT · <b>ABI</b></span></header>
+            <ul class="product-chips"><li data-tip="IT Service Management">ITSM</li><li data-tip="IT Operations Management">ITOM</li><li data-tip="IT Asset Management">ITAM</li><li>App Engine / Aplicações de TI</li></ul>
+          </article>
+          <div class="same reveal"><span>=</span> mesmo modelo</div>
+          <article class="domain-card reveal">
+            <header><span class="tile-icon"><svg class="ic"><use href="#i-briefcase"/></svg></span><h3>COE Business</h3><span class="dc-mgr">COE Manager Business · <b>ABI</b></span></header>
+            <ul class="product-chips"><li>CSM</li><li>SPM</li><li>App Engine / Aplicações de Negócio</li></ul>
+          </article>
+          <blockquote class="own-msg reveal">
+            <p>A ABI define a direção.<br><span>O COE orquestra a execução.</span></p>
+            <small>A ABI mantém o ownership do domínio; o COE transforma essa direção em governança e execução.</small>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       03 · GOVERNANÇA GLOBAL, EXECUÇÃO FLEXÍVEL (Global COE + Support + Sustain)
+       ===================================================== -->
+  <section class="slide slide--soft" id="flexible-execution" data-nav="coe" data-group="Operações" data-title="Global COE · Support · Sustain">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">03 · Center of Excellence</p>
+          <h2>Governança global. Execução flexível.</h2>
+          <p class="sub">O COE mantém responsabilidades e diretrizes globais, enquanto Support e Sustain escalam conforme as necessidades do domínio e dos produtos.</p>
+        </div>
+      </div>
+
+      <div class="fx" data-wires="gcoe>fsup,gcoe>fsus">
+        <svg class="wires" aria-hidden="true"></svg>
+
+        <!-- Camada global -->
+        <div class="fx-top">
+          <div class="fx-coe reveal" data-node="gcoe">
+            <div class="fx-coe-head">
+              <span class="fx-coe-icon"><svg class="ic"><use href="#i-globe"/></svg></span>
+              <div><strong>Global COE</strong><small>Governança, padrões e diretrizes</small></div>
+            </div>
+            <ul class="fx-leaders">
+              <li><b>COE Manager</b><span class="is-abi">ABI Ownership</span></li>
+              <li><b>Architect</b><span>Quality</span></li>
+              <li><b>Engagement Manager</b><span>Delivery</span></li>
+            </ul>
+            <p class="fx-resp">Governança · Arquitetura · Padrões · Conhecimento · Responsabilidades</p>
+          </div>
+          <blockquote class="fx-msg reveal">
+            <p>Um modelo global.<br><span>Múltiplas estruturas de execução.</span></p>
+            <small>O modelo define responsabilidades e governança — não impõe uma estrutura organizacional única.</small>
+          </blockquote>
+        </div>
+
+        <!-- Support × Sustain -->
+        <div class="fx-row">
+          <article class="fx-col c-support reveal" data-node="fsup">
+            <header class="fx-col-head">
+              <span class="fx-col-icon"><svg class="ic"><use href="#i-headset"/></svg></span>
+              <div><small>Operações · por domínio</small><h3>Global Support</h3></div>
+              <p class="fx-col-msg">Support opera o domínio.</p>
+            </header>
+            <p class="fx-col-desc">Atende a operação, incidentes e problemas.</p>
+            <ul class="fx-kids fx-kids--4">
+              <li><small>Região</small>LATAM Support</li>
+              <li><small>Região</small>North America Support</li>
+              <li><small>Região</small>Europe Support</li>
+              <li class="is-dashed"><small>País / depto.</small>Local Support</li>
+            </ul>
+            <ul class="fx-rules"><li>Incident e Problem</li><li>SLAs e indicadores</li><li>Conhecimento compartilhado</li><li>Qualidade e comunicação</li></ul>
+          </article>
+
+          <article class="fx-col c-sustain reveal" data-node="fsus">
+            <header class="fx-col-head">
+              <span class="fx-col-icon"><svg class="ic"><use href="#i-refresh"/></svg></span>
+              <div><small>Operações · por produto</small><h3>Global Sustain</h3></div>
+              <p class="fx-col-msg">Sustain evolui o produto.</p>
+            </header>
+            <p class="fx-col-desc">Evolui produtos, releases e melhorias contínuas. Atende diretamente produtos menores.</p>
+            <ul class="fx-kids fx-kids--3">
+              <li><small>Dedicated</small>CSM Sustain</li>
+              <li><small>Dedicated</small>SPM Sustain</li>
+              <li><small>Distributed</small>People Sustain<span class="fx-sub"><i>LATAM</i><i>North America</i><i>Europe</i></span></li>
+            </ul>
+            <ul class="fx-rules"><li>Padrões técnicos e de desenvolvimento</li><li>Release e change</li><li>Indicadores comuns</li><li>Technical debt</li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="fx-drivers reveal">
+        <div class="fx-drivers-label"><b>Fatores de dimensionamento</b><span>A estrutura pode variar conforme:</span></div>
+        <ul class="tags"><li>Geografia</li><li>Produto</li><li>Departamento</li><li>Volume</li><li>Complexidade</li><li>Criticidade</li><li>Funding</li><li>Necessidades regionais</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       09 · DELIVERY MODELS
+       ===================================================== -->
+  <section class="slide" id="delivery-models" data-nav="coe" data-group="Delivery" data-title="Modelos de squad">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--project">03 · Center of Excellence · Delivery</p>
+          <h2>Modelos de squad</h2>
+          <p class="sub">Estruturas flexíveis de squad de acordo com tamanho, duração, complexidade e necessidade da demanda.</p>
+        </div>
+        <p class="step-q"><b>Delivery · 1/4</b>Qual estrutura de execução utilizar?</p>
+      </div>
+
+      <div class="dm-grid">
+        <article class="dm c-project reveal">
+          <div class="dm-body">
+            <span class="dm-num">1 · Projeto estratégico</span>
+            <h3>Dedicated Project Squad</h3>
+            <p class="dm-when">Grandes iniciativas, transformação, novas implementações e programas estratégicos.</p>
+            <ul class="tags"><li>squad dedicada</li><li>escopo</li><li>orçamento</li><li>cronograma</li></ul>
+          </div>
+          <ol class="dm-vis dm-vis--chain">
+            <li class="c-project">Squad</li><li>Go Live</li><li>Hypercare</li><li class="c-sustain">Sustain</li>
+          </ol>
+        </article>
+
+        <article class="dm c-product reveal">
+          <div class="dm-body">
+            <span class="dm-num">2 · Ciclo de vida de produto</span>
+            <h3>Persistent Product Squad</h3>
+            <p class="dm-when">Produtos com roadmap contínuo e evolução constante.</p>
+            <ul class="tags"><li>squad fixa</li><li>roadmap contínuo</li><li>releases recorrentes</li><li>capacidade estável</li></ul>
+          </div>
+          <div class="dm-vis dm-vis--releases">
+            <span class="rl-road">Roadmap <svg class="ic"><use href="#i-arrow-right"/></svg></span>
+            <span class="rl-list"><i>Release</i><i>Release</i><i>Release</i><i>Release</i></span>
+          </div>
+        </article>
+
+        <article class="dm c-sustain reveal">
+          <div class="dm-body">
+            <span class="dm-num">3 · Pequeno projeto / melhoria</span>
+            <h3>Sustain Capacity Extension</h3>
+            <p class="dm-when">A demanda ultrapassa momentaneamente a capacidade do Sustain, mas não justifica uma nova squad.</p>
+            <ul class="tags"><li>capacidade temporária</li><li>especialistas adicionais</li><li>duração limitada</li></ul>
+          </div>
+          <div class="dm-vis dm-vis--capacity">
+            <svg viewBox="0 0 220 100" aria-hidden="true">
+              <path class="cap-ext" d="M10 62 H70 C80 62 82 28 94 28 H146 C158 28 160 62 170 62 H210 V76 H10Z"/>
+              <path class="cap-base" d="M10 62 H210 V76 H10Z"/>
+              <text x="120" y="18" text-anchor="middle">+ capacidade temporária</text>
+              <text x="10" y="96">baseline do Sustain</text>
+            </svg>
+          </div>
+        </article>
+
+        <article class="dm c-spec reveal">
+          <div class="dm-body">
+            <span class="dm-num">4 · Specialist On Demand</span>
+            <h3>Especialistas compartilhados</h3>
+            <p class="dm-when">Especialistas compartilhados apoiam temporariamente — sem precisar ser dedicados a cada estrutura.</p>
+            <ul class="tags"><li>Arquitetura</li><li>Integração</li><li>AI</li><li>Segurança</li><li>UX</li><li>Dados</li><li>SAP</li></ul>
+          </div>
+          <div class="dm-vis dm-vis--hub">
+            <span class="hub-core"><svg class="ic"><use href="#i-users"/></svg>Especialistas</span>
+            <span class="hub-targets"><i class="c-project">Delivery</i><i class="c-sustain">Sustain</i><i class="c-support">Support</i></span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       10 · DEMAND TO DELIVERY
+       ===================================================== -->
+  <section class="slide slide--soft" id="demand-to-delivery" data-nav="coe" data-group="Delivery" data-title="Da demanda ao delivery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--project">03 · Center of Excellence · Delivery · Da demanda ao delivery</p>
+          <h2>O COE direciona cada demanda para o modelo de execução mais adequado.</h2>
+        </div>
+        <p class="step-q"><b>Delivery · 2/4</b>Como direcionamos cada demanda?</p>
+      </div>
+
+      <div class="d2d reveal" data-wires="dec>r1|h,dec>r2|h,dec>r3|h,dec>r4|h,dec>r5|h,dec>r6|h,dec>r7|h">
+        <svg class="wires" aria-hidden="true"></svg>
+        <ol class="d2d-flow">
+          <li><svg class="ic"><use href="#i-inbox"/></svg>Nova demanda</li>
+          <li><svg class="ic"><use href="#i-filter"/></svg>Intake do COE</li>
+          <li class="d2d-dec" data-node="dec"><svg class="ic"><use href="#i-ruler"/></svg>Tamanho / complexidade / risco</li>
+        </ol>
+        <ul class="d2d-routes">
+          <li data-node="r1"><span>Pequena</span><b class="c-sustain">Sustain</b></li>
+          <li data-node="r2"><span>Média</span><b class="c-sustain">Sustain + capacidade temporária</b></li>
+          <li data-node="r3"><span>Grande / estratégica</span><b class="c-project">Dedicated Project Squad</b></li>
+          <li data-node="r4"><span>Produto de longo prazo</span><b class="c-product">Persistent Product Squad</b></li>
+          <li data-node="r5"><span>Exige capability especializada</span><b class="c-spec">Specialist On Demand</b></li>
+          <li data-node="r6"><span>Incidente em produção</span><b class="c-support">Support</b></li>
+          <li data-node="r7"><span>Problema de plataforma</span><b class="c-plat">Platform Operations</b></li>
+        </ul>
+      </div>
+
+      <div class="criteria reveal">
+        <h4 class="mini-title">A decisão também considera</h4>
+        <ul class="tags"><li>complexidade</li><li>arquitetura</li><li>duração</li><li>impacto no negócio</li><li>integrações</li><li>países</li><li>departamentos</li><li>funding</li><li>skills necessárias</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       04 · DELIVERY WORKFLOW
+       ===================================================== -->
+  <section class="slide" id="delivery-workflow" data-nav="coe" data-group="Delivery" data-title="Fluxo de delivery · SStudio">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--project">03 · Center of Excellence · Delivery · Fluxo de delivery</p>
+          <h2>Fluxo de delivery · SStudio</h2>
+          <p class="sub">Do Intake à execução técnica, uma cadeia única de visibilidade e rastreabilidade do trabalho.</p>
+        </div>
+        <div class="head-side">
+          <p class="step-q"><b>Delivery · 3/4</b>Como governamos a execução com visibilidade?</p>
+          <span class="asm-badge"><svg class="ic"><use href="#i-flow"/></svg><b>SStudio</b> · baseado no framework ASM</span>
+        </div>
+      </div>
+
+      <p class="wf-trace reveal"><svg class="ic"><use href="#i-branch"/></svg><b>Rastreabilidade ponta a ponta</b><span>Contexto → Delivery → Execução → Status</span></p>
+
+      <ol class="wf-levels wf-levels--wide">
+        <li class="wf-level lv-1 reveal">
+          <span class="wf-num">1</span>
+          <div class="wf-card">
+            <div class="wf-name"><small>Entrada · qualificar e direcionar</small><strong>Intake</strong><span class="wf-sub">Demandas, oportunidades e necessidades</span></div>
+            <ol class="wf-pipe"><li>Queued</li><li>Qualification</li><li>Ready for Delivery</li><li>Approval</li><li>Completed</li></ol>
+          </div>
+        </li>
+        <li class="wf-level lv-2 reveal">
+          <span class="wf-num">2</span>
+          <div class="wf-card">
+            <div class="wf-name"><small>Contexto estratégico</small><strong>Projects &amp; Challenges</strong><span class="wf-sub">Project · Challenge</span></div>
+            <ol class="wf-pipe"><li>Planejamento</li><li>Execução</li><li>Monitoramento</li><li>Encerramento</li></ol>
+          </div>
+        </li>
+        <li class="wf-level lv-3 reveal">
+          <span class="wf-num">3</span>
+          <div class="wf-card">
+            <div class="wf-name"><small>Delivery · entregar ou resolver</small><strong>Features · Technical Debts · Problems</strong></div>
+            <ol class="wf-pipe"><li>Discovery</li><li>Refinement</li><li>Ready</li><li>Build</li><li>SIT</li><li>UAT</li><li>Deploy</li><li>Hypercare</li><li>Completed</li></ol>
+          </div>
+        </li>
+        <li class="wf-level lv-4 reveal">
+          <span class="wf-num">4</span>
+          <div class="wf-card">
+            <div class="wf-name"><small>Execução técnica · squads</small><strong>User Stories · Bugs · Fixes</strong></div>
+            <ol class="wf-pipe"><li>Backlog</li><li>Ready</li><li>In Progress</li><li>Review / Test</li><li>Done</li></ol>
+          </div>
+        </li>
+      </ol>
+      <div class="wf-foot-row reveal">
+        <p class="wf-foot"><b>Um fluxo, múltiplas visões — do Intake à execução.</b> Cada nível possui seu próprio propósito e pipeline, mas todos permanecem conectados.</p>
+        <button type="button" class="deliv-link deliv-link--project" data-modal="modal-wit">
+          <svg class="ic"><use href="#i-list"/></svg>
+          <span><small>Conteúdo adicional</small>Tipos de item de trabalho</span>
+          <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </button>
+      </div>
+
+      <div class="gv gv--band reveal">
+        <div class="gv-lead">
+          <h3>Governar com visibilidade.</h3>
+          <p><b>Visibilidade viabiliza a governança.</b> O COE acompanha portfolio, capacity, riscos, dependências e gargalos — sem microgestão de tarefas.</p>
+        </div>
+        <ul class="gv-grid">
+          <li><b>Visibilidade de portfólio</b>Iniciativas em andamento e o que entregam.</li>
+          <li><b>Visibilidade de delivery</b>Features, Technical Debts e Problems por iniciativa.</li>
+          <li><b>Visibilidade de execução</b>Stories, Bugs e Fixes em execução.</li>
+          <li><b>Visibilidade do fluxo</b>Onde cada item está em seu pipeline.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       04 · DELIVERY METRICS (dashboard demo)
+       ===================================================== -->
+  <section class="slide" id="delivery-metrics" data-nav="coe" data-group="Delivery" data-title="Métricas de delivery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--project">03 · Center of Excellence · Delivery · Métricas de delivery</p>
+          <h2>Métricas de delivery</h2>
+          <p class="sub">Indicadores de fluxo e de engenharia para governar o delivery com dados.</p>
+        </div>
+        <div class="head-side">
+          <p class="step-q"><b>Delivery · 4/4</b>Como medimos e melhoramos o fluxo de entrega?</p>
+          <span class="asm-badge"><svg class="ic"><use href="#i-flow"/></svg><b>SStudio</b> · baseado no framework ASM</span>
+        </div>
+      </div>
+
+      <div class="dm-layout">
+        <figure class="dash reveal" aria-label="Exemplo ilustrativo de dashboard de delivery">
+          <header class="dash-head">
+            <span class="dash-icon"><svg class="ic"><use href="#i-bars"/></svg></span>
+            <div><strong>Dashboard de fluxo de delivery</strong><small>COE Business · todas as squads · últimos 90 dias</small></div>
+            <span class="rp-tag">Exemplo ilustrativo</span>
+          </header>
+
+          <div class="dash-kpis">
+            <div class="kpi"><small>Lead Time</small><strong>18,4<em>d</em></strong><span class="kpi-d good">▼ 12%</span></div>
+            <div class="kpi"><small>Throughput</small><strong>42<em>/sem</em></strong><span class="kpi-d good">▲ 8%</span></div>
+            <div class="kpi"><small>Cycle Time</small><strong>9,2<em>d</em></strong><span class="kpi-d good">▼ 6%</span></div>
+            <div class="kpi"><small>Work Time</small><strong>5,1<em>d</em></strong><span class="kpi-d">estável</span></div>
+            <div class="kpi"><small>Wait Time</small><strong>4,1<em>d</em></strong><span class="kpi-d bad">▲ 9%</span></div>
+            <div class="kpi"><small>SLA</small><strong>94<em>%</em></strong><span class="kpi-d good">meta 90%</span></div>
+          </div>
+
+          <div class="dash-row dash-row--a">
+            <section class="dcard">
+              <h5>Lead Time · tendência <span class="dc-leg"><i class="l1"></i>Lead Time <i class="l2"></i>Meta</span></h5>
+              <svg class="dash-line" viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+                <path class="dl-area" d="M0 22 L25 26 L50 20 L75 30 L100 28 L125 36 L150 34 L175 42 L200 40 L225 47 L250 45 L275 52 L300 50 L300 80 L0 80Z"/>
+                <path class="dl-line" d="M0 22 L25 26 L50 20 L75 30 L100 28 L125 36 L150 34 L175 42 L200 40 L225 47 L250 45 L275 52 L300 50"/>
+                <path class="dl-target" d="M0 44 H300"/>
+              </svg>
+            </section>
+            <section class="dcard">
+              <h5>Cycle Time · Work × Wait</h5>
+              <div class="ww-bar"><i class="ww-work" style="--p:55%">Work 5,1d</i><i class="ww-wait" style="--p:45%">Wait 4,1d</i></div>
+              <p class="ww-eff"><strong>55%</strong> Flow Efficiency</p>
+            </section>
+          </div>
+
+          <div class="dash-row dash-row--b">
+            <section class="dcard">
+              <h5>Throughput · semanas</h5>
+              <div class="tp-bars"><i style="--h:55%"></i><i style="--h:62%"></i><i style="--h:48%"></i><i style="--h:70%"></i><i style="--h:66%"></i><i style="--h:78%"></i><i style="--h:74%"></i><i style="--h:86%"></i></div>
+            </section>
+            <section class="dcard">
+              <h5>WIP por etapa</h5>
+              <ul class="wip">
+                <li><span>Build</span><i style="--w:70%"></i><b>9</b></li>
+                <li><span>SIT</span><i style="--w:40%"></i><b>5</b></li>
+                <li class="hot"><span>UAT</span><i style="--w:100%"></i><b>13</b></li>
+                <li><span>Deploy</span><i style="--w:22%"></i><b>3</b></li>
+              </ul>
+              <p class="wip-note">UAT concentra o maior tempo de espera</p>
+            </section>
+            <section class="dcard">
+              <h5>SLA por tipo</h5>
+              <ul class="sla">
+                <li><span>Feature</span><i style="--w:91%"></i><b>91%</b></li>
+                <li><span>Tech Debt</span><i style="--w:88%"></i><b>88%</b></li>
+                <li><span>Problem</span><i style="--w:95%"></i><b>95%</b></li>
+                <li><span>Fix</span><i style="--w:98%"></i><b>98%</b></li>
+              </ul>
+            </section>
+          </div>
+
+          <div class="dash-eng">
+            <span class="de-label">Controles de engenharia</span>
+            <span><b>23</b>WIP</span>
+            <span><b>4</b>Aging WIP &gt; 15d</span>
+            <span><b>3/sem</b>Deploy Frequency</span>
+            <span><b>6%</b>Change Failure Rate</span>
+            <span><b>4%</b>Bug Escape Rate</span>
+            <span><b>7%</b>Rework</span>
+          </div>
+        </figure>
+
+        <div class="mx-side">
+          <div class="mx-block reveal">
+            <h4 class="mini-title">Indicadores de fluxo</h4>
+            <dl class="mx-defs">
+              <div><dt>Lead Time</dt><dd>Da entrada no Intake até a entrega.</dd></div>
+              <div><dt>Throughput</dt><dd>Itens concluídos por período.</dd></div>
+              <div><dt>Cycle Time</dt><dd>Do início do trabalho até a conclusão.</dd></div>
+              <div><dt>Work Time</dt><dd>Tempo em trabalho ativo.</dd></div>
+              <div><dt>Wait Time</dt><dd>Tempo parado em filas, validações e aprovações.</dd></div>
+              <div><dt>SLA</dt><dd>Entregas dentro do prazo acordado.</dd></div>
+            </dl>
+          </div>
+          <div class="mx-block reveal">
+            <h4 class="mini-title">Controles de engenharia</h4>
+            <ul class="tags"><li>Flow Efficiency</li><li>WIP</li><li>Aging WIP</li><li>Deployment Frequency</li><li>Change Failure Rate</li><li>Bug Escape Rate</li><li>MTTR</li><li>Rework</li></ul>
+          </div>
+          <p class="neq reveal"><b>Medir o fluxo para melhorar o fluxo.</b> Os indicadores orientam decisões do COE — não o controle de pessoas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       12 · COE OUTCOMES & DELIVERABLES
+       ===================================================== -->
+  <section class="slide slide--soft" id="coe-outcomes" data-nav="coe" data-title="Resultados e entregáveis">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">03 · Center of Excellence · Resultados</p>
+          <h2>Resultados e entregáveis do COE</h2>
+          <p class="sub sub--strong">O COE governa, orienta e garante qualidade — sem substituir os times de delivery.</p>
+        </div>
+      </div>
+
+      <div class="outcomes">
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-pen"/></svg><h3>Arquitetura</h3></header><ul><li>Blueprints de solução</li><li>Decisões do ARB</li><li>Padrões de arquitetura</li></ul></article>
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-book"/></svg><h3>Padrões</h3></header><ul><li>Guias de desenvolvimento</li><li>Padrões de integração</li><li>Padrões de segurança</li><li>DoR / DoD</li></ul></article>
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-clipboard"/></svg><h3>Garantia de qualidade</h3></header><ul><li>Avaliações de projeto</li><li>Checkpoints técnicos</li><li>Prontidão para go-live</li></ul></article>
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-users"/></svg><h3>Pessoas</h3></header><ul><li>Qualificação técnica</li><li>Matriz de skills</li><li>Capacitação</li></ul></article>
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-map"/></svg><h3>Portfólio</h3></header><ul><li>Roadmap técnico</li><li>Technical Debt</li><li>Riscos</li><li>Visibilidade do P1A</li><li>Recomendações de capacidade</li></ul></article>
+        <article class="oc reveal"><header><svg class="ic"><use href="#i-sparkle"/></svg><h3>Conhecimento</h3></header><ul><li>Padrões reutilizáveis</li><li>Documentação</li><li>Boas práticas</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 04 · INNOVATION
+       ===================================================== -->
+  <section class="slide slide--cover c-innov" id="cap-04" data-nav="innovation" data-title="Capítulo 04 · Innovation" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 04 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Innovation</h2>
+          <p class="cover-q reveal">Como transformamos novas tecnologias e necessidades recorrentes em capabilities reutilizáveis?</p>
+          <ol class="cover-topics reveal" data-topics="innovation"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">04</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="innovation" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       13 · FROM COE TO COE+I
+       ===================================================== -->
+  <section class="slide slide--turn" id="coe-plus-i" data-nav="innovation" data-title="Do COE ao COE+I">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--light reveal">04 · Innovation</p>
+
+      <div class="evo reveal">
+        <div class="evo-step"><span class="evo-big">COE</span><small>Center of Excellence</small></div>
+        <svg class="ic evo-arrow"><use href="#i-arrow-right"/></svg>
+        <div class="evo-step evo-step--i"><span class="evo-big">COE <em>+ I</em></span><small>Excelência + Inovação</small></div>
+        <svg class="ic evo-arrow"><use href="#i-arrow-right"/></svg>
+        <div class="evo-step evo-step--final"><span class="evo-name">Center of Excellence <em>&amp; Innovation</em></span></div>
+      </div>
+
+      <h2 class="turn-title reveal">Excelência gera consistência.<br><em>Inovação cria a próxima capability.</em></h2>
+
+      <p class="turn-text reveal">O objetivo de Innovation é identificar novas oportunidades tecnológicas, experimentá-las e transformá-las em capabilities reutilizáveis e escaláveis.</p>
+
+      <div class="turn-duo">
+        <div class="td-card reveal">
+          <span class="td-kicker">Excelência</span>
+          <strong>Governa o presente</strong>
+          <p>Padrões, arquitetura, qualidade e governança consistentes.</p>
+        </div>
+        <div class="td-card td-card--i reveal">
+          <span class="td-kicker">Inovação</span>
+          <strong>Constrói o futuro</strong>
+          <p>Novas tecnologias que se tornam capabilities para todo o ecossistema.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       05 · HORIZON AI (Enterprise AI Capability)
+       ===================================================== -->
+  <section class="slide slide--soft" id="horizon-ai" data-nav="innovation" data-title="Horizon AI">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--innov">04 · Innovation · Horizon AI</p>
+          <h2>Horizon AI · Enterprise AI Capability</h2>
+          <p class="sub">De casos de uso isolados a uma capability de inteligência corporativa governada e reutilizável.</p>
+        </div>
+        <div class="own-strip">
+          <span><small>Ownership</small>COEI / Innovation</span>
+          <svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span><small>Visão</small>From AI Use Cases to Enterprise AI</span>
+        </div>
+      </div>
+
+      <div class="hai-hero reveal">
+        <span class="hai-tag">Camada de Inteligência Operacional</span>
+        <div class="hai-stages">
+          <span>UNDERSTAND</span><svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span>ASSIST</span><svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span>CREATE</span><svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span>DECIDE</span><svg class="ic"><use href="#i-arrow-right"/></svg>
+          <span>ACT</span>
+        </div>
+      </div>
+
+      <div class="hai-grid">
+        <article class="hai-card reveal">
+          <header>
+            <span class="hai-icon"><svg class="ic"><use href="#i-book"/></svg></span>
+            <div>
+              <h3>Knowledge Generation</h3>
+              <small>Histórico em Conhecimento</small>
+            </div>
+          </header>
+          <p>Analisa histórico de Cases, Incidents, Interactions e Resolutions para identificar padrões e conhecimento reutilizável.</p>
+          <ul class="tags">
+            <li>Padrões recorrentes</li><li>Resoluções comuns</li><li>Novos artigos de KB</li><li>Apoio à redação</li>
+          </ul>
+          <p class="hai-msg">“Transform operational history into reusable knowledge.”</p>
+        </article>
+
+        <article class="hai-card reveal">
+          <header>
+            <span class="hai-icon"><svg class="ic"><use href="#i-bot"/></svg></span>
+            <div>
+              <h3>Smart Response</h3>
+              <small>Respostas Contextuais</small>
+            </div>
+          </header>
+          <p>Interpreta chamados de dúvida utilizando Knowledge, casos históricos e contexto para gerar ou sugerir respostas aos agentes.</p>
+          <ul class="tags">
+            <li>Case &amp; Incident</li><li>Interaction</li><li>Agent Workspace</li><li>Dúvidas frequentes</li>
+          </ul>
+          <p class="hai-msg">“Use operational knowledge to assist or answer recurring questions.”</p>
+        </article>
+
+        <article class="hai-card reveal">
+          <header>
+            <span class="hai-icon"><svg class="ic"><use href="#i-inbox"/></svg></span>
+            <div>
+              <h3>Catalog Q&amp;A</h3>
+              <small>Assistência no Catálogo</small>
+            </div>
+          </header>
+          <p>Permite ao usuário fazer perguntas contextuais diretamente dentro do catálogo antes da abertura da solicitação.</p>
+          <ul class="tags">
+            <li>Catalog Items</li><li>Record Producers</li><li>Prazos &amp; Regras</li><li>Anexos &amp; Opções</li>
+          </ul>
+          <p class="hai-msg">“Bring contextual AI assistance directly into the request experience.”</p>
+        </article>
+
+        <article class="hai-card reveal">
+          <header>
+            <span class="hai-icon"><svg class="ic"><use href="#i-globe"/></svg></span>
+            <div>
+              <h3>Smart Translation</h3>
+              <small>Operações Multilíngues</small>
+            </div>
+          </header>
+          <p>Traduz mensagens, comentários, work notes e interações preservando a mensagem original, contexto e significado.</p>
+          <ul class="tags">
+            <li>Case Messages</li><li>Work Notes</li><li>Interações</li><li>Operação Global</li>
+          </ul>
+          <p class="hai-msg">“Enable global operations without language becoming a barrier.”</p>
+        </article>
+      </div>
+
+      <div class="hai-footer reveal">
+        <div class="hai-gov-layer">
+          <span class="hgl-label"><svg class="ic"><use href="#i-shield"/></svg>AI Governance &amp; Observability</span>
+          <div class="hgl-dims">
+            <span>Consumption</span><span>Quality</span><span>Accuracy</span><span>Feedback</span>
+            <span>Adoption</span><span>Outcomes</span><span>Risk</span><span>Human Oversight</span>
+          </div>
+          <p class="hgl-msg"><b>Governed AI. Measurable AI. Reusable AI.</b> Camada transversal para garantir onde, quanto e com qual qualidade a AI é consumida.</p>
+        </div>
+
+        <div class="hai-rel-plat">
+          <span class="hrp-title"><svg class="ic"><use href="#i-layers"/></svg>Conexão com Platform Capabilities</span>
+          <p>AI provê inteligência — Platform Capabilities fornecem execução governada:</p>
+          <ul class="hrp-links">
+            <li><b>Horizon AI</b> → <i>Flow Execution</i> (automação ServiceNow)</li>
+            <li><b>Horizon AI</b> → <i>Connect Execution</i> (integrações)</li>
+            <li><b>Horizon AI</b> → <i>Relay Execution</i> (RPA / externo)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       05.1 · SUGESTÕES DE INOVAÇÃO (Innovation Opportunities)
+       ===================================================== -->
+  <section class="slide" id="innovation-suggestions" data-nav="innovation" data-title="Sugestões de Inovação">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--innov">04 · Innovation · Oportunidades</p>
+          <h2>Sugestões de Inovação</h2>
+          <p class="sub">Opportunities to progressively expand AI across the ServiceNow ecosystem — da assistência à automação governada.</p>
+        </div>
+        <div class="sug-badges-legend">
+          <span class="status-badge status-badge--avail">AVAILABLE · Validado / Existente</span>
+          <span class="status-badge status-badge--opp">OPPORTUNITY · Oportunidade</span>
+          <span class="status-badge status-badge--exp">EXPLORATION · Requer Descoberta</span>
+        </div>
+      </div>
+
+      <div class="sug-banner reveal">
+        <div class="sb-flow-label">
+          <span>INCREASING AUTOMATION</span>
+          <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </div>
+        <p class="sb-msg"><b>Governed Autonomy:</b> Automation increases progressively within governed boundaries. Human governance remains where judgment, risk or exceptions require it.</p>
+      </div>
+
+      <div class="sug-stages reveal">
+        <article class="sug-stage">
+          <header>
+            <span class="st-num">1</span>
+            <h3>UNDERSTAND</h3>
+            <p>Context &amp; Operational Data</p>
+          </header>
+          <ul>
+            <li><span>Ticket History Analysis</span><i class="status-badge status-badge--avail">Available</i></li>
+            <li><span>Similar Case Detection</span><i class="status-badge status-badge--avail">Available</i></li>
+            <li><span>Classification &amp; Intent</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Problem Pattern Detection</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Knowledge Gap Detection</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+          </ul>
+          <footer>Transform operational data into context</footer>
+        </article>
+
+        <article class="sug-stage">
+          <header>
+            <span class="st-num">2</span>
+            <h3>ASSIST</h3>
+            <p>Help Users &amp; Agents</p>
+          </header>
+          <ul>
+            <li><span>Smart Response &amp; Q&amp;A</span><i class="status-badge status-badge--avail">Available</i></li>
+            <li><span>Smart Translation</span><i class="status-badge status-badge--avail">Available</i></li>
+            <li><span>Resolution Recommendation</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Case Summarization</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Next Best Action</span><i class="status-badge status-badge--exp">Exploration</i></li>
+          </ul>
+          <footer>Bring intelligence to user &amp; agent experience</footer>
+        </article>
+
+        <article class="sug-stage">
+          <header>
+            <span class="st-num">3</span>
+            <h3>CREATE</h3>
+            <p>Generate Artifacts</p>
+          </header>
+          <ul>
+            <li><span>KB Generation</span><i class="status-badge status-badge--avail">Available</i></li>
+            <li><span>Smart Task Generation</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Intelligent Form Filling</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Communication Generation</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Documentation Generation</span><i class="status-badge status-badge--exp">Exploration</i></li>
+          </ul>
+          <footer>Turn operational context into reusable artifacts</footer>
+        </article>
+
+        <article class="sug-stage">
+          <header>
+            <span class="st-num">4</span>
+            <h3>DECIDE</h3>
+            <p>Recommend Decisions</p>
+          </header>
+          <ul>
+            <li><span>Smart Routing &amp; Priority</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Approval Assistance</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Change Risk Analysis</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Automation Opportunity Detection</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Exception Detection</span><i class="status-badge status-badge--exp">Exploration</i></li>
+          </ul>
+          <footer>Turn operational intelligence into better decisions</footer>
+        </article>
+
+        <article class="sug-stage">
+          <header>
+            <span class="st-num">5</span>
+            <h3>ACT</h3>
+            <p>Execute Governed Actions</p>
+          </header>
+          <ul>
+            <li><span>Flow Execution via AI</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Integration Execution</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>RPA Execution (Relay)</span><i class="status-badge status-badge--opp">Opportunity</i></li>
+            <li><span>Autonomous Fulfillment</span><i class="status-badge status-badge--exp">Exploration</i></li>
+            <li><span>Autonomous Resolution</span><i class="status-badge status-badge--exp">Exploration</i></li>
+          </ul>
+          <footer>Turn intelligence into governed execution</footer>
+        </article>
+      </div>
+
+      <div class="opp-grid reveal">
+        <article class="opp-card opp--discovery">
+          <div class="opp-head"><span class="tile-icon"><svg class="ic"><use href="#i-sparkle"/></svg></span><h4>Automation Discovery</h4><span class="opp-tag">Oportunidade</span></div>
+          <p class="opp-flow">History → AI → Pattern → Automation Opportunity</p>
+          <p class="opp-desc">AI analisa históricos operacionais e tarefas manuais recorrentes para mapear potencial de automação sem assumir savings automáticos.</p>
+        </article>
+
+        <article class="opp-card opp--kgap">
+          <div class="opp-head"><span class="tile-icon"><svg class="ic"><use href="#i-book"/></svg></span><h4>Knowledge Gap Detection</h4><span class="opp-tag">Melhoria</span></div>
+          <p class="opp-flow">Questions + Search + KB → AI → Knowledge Gap</p>
+          <p class="opp-desc">Mapeia o que os usuários perguntam que a organização ainda não responde bem, alimentando Support e Knowledge Management.</p>
+        </article>
+
+        <article class="opp-card opp--prob">
+          <div class="opp-head"><span class="tile-icon"><svg class="ic"><use href="#i-bug"/></svg></span><h4>Problem Intelligence</h4><span class="opp-tag">Investigação</span></div>
+          <p class="opp-flow">Incidents → AI → Clusters → Potential Problem</p>
+          <p class="opp-desc">Clusteriza chamados semelhantes para apoiar a investigação de causas comuns e a criação estruturada de Problems.</p>
+        </article>
+
+        <article class="opp-card opp--frict">
+          <div class="opp-head"><span class="tile-icon"><svg class="ic"><use href="#i-trend"/></svg></span><h4>Process Friction Detection</h4><span class="opp-tag">Processos</span></div>
+          <p class="opp-flow">Reassignments + Delays + Loops → AI → Friction</p>
+          <p class="opp-desc">Identifica atrito operacional (gargalos de aprovação, repasses, loops) para direcionar melhorias contínuas para Sustain e Delivery.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 05 · VALOR E RESULTADOS
+       ===================================================== -->
+  <section class="slide slide--cover c-coe" id="cap-05" data-nav="value" data-title="Capítulo 05 · Valor e resultados" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 05 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Valor e resultados</h2>
+          <p class="cover-q reveal">Como sabemos se o modelo está gerando resultado?</p>
+          <ol class="cover-topics reveal" data-topics="value"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">05</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="value" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       05 · VALUE & OUTCOMES
+       ===================================================== -->
+  <section class="slide" id="value-outcomes" data-nav="value" data-title="Valor e resultados">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">05 · Valor e resultados</p>
+          <h2>Transformando melhoria em valor mensurável.</h2>
+          <p class="sub">Medimos os resultados do modelo para decidir onde melhorar e reinvestir.</p>
+        </div>
+        <p class="vo-motto">Meça o que muda.<br><span>Valide o que gera valor.</span></p>
+      </div>
+
+      <div class="vc">
+        <ol class="vc-steps">
+          <!-- 01 · OPERAR -->
+          <li class="vc-step vc-1 reveal">
+            <header><span class="vc-num">01</span><h3>Operar</h3></header>
+            <p class="vc-msg">Cada frente produz evidências sobre a operação.</p>
+            <ul class="vc-list">
+              <li><svg class="ic"><use href="#i-flow"/></svg><div><b>Delivery</b><span>SStudio</span></div></li>
+              <li><svg class="ic"><use href="#i-headset"/></svg><div><b>Operações</b><span>Support · Sustain</span></div></li>
+              <li><svg class="ic"><use href="#i-layers"/></svg><div><b>Plataforma</b><span>Platform Operations</span></div></li>
+              <li><svg class="ic"><use href="#i-sparkle"/></svg><div><b>Capabilities</b><span>Horizon Flow · Connect · Relay · AI</span></div></li>
+            </ul>
+          </li>
+
+          <!-- 02 · MEDIR -->
+          <li class="vc-step vc-2 reveal">
+            <header><span class="vc-num">02</span><h3>Medir</h3></header>
+            <p class="vc-msg">Avaliamos a performance em cada frente.</p>
+            <ul class="vc-list vc-list--q">
+              <li><div><b>Delivery</b><span>Estamos entregando melhor?</span></div></li>
+              <li><div><b>Operações</b><span>Estamos operando melhor?</span></div></li>
+              <li><div><b>Plataforma</b><span>A plataforma está mais saudável?</span></div></li>
+              <li><div><b>Capabilities</b><span>Automação e AI estão gerando resultado?</span></div></li>
+            </ul>
+            <p class="vc-kpis"><small>Principais indicadores</small>Lead Time · SLA · MTTR · Qualidade · Saúde da plataforma · Automação · Adoção · Reúso</p>
+          </li>
+
+          <!-- 03 · MELHORAR -->
+          <li class="vc-step vc-3 reveal">
+            <header><span class="vc-num">03</span><h3>Melhorar</h3></header>
+            <p class="vc-msg">Usamos as evidências para priorizar e evoluir.</p>
+            <ul class="vc-list">
+              <li><svg class="ic"><use href="#i-zap"/></svg><div><b>Automatizar</b><span>Reduzir trabalho repetitivo.</span></div></li>
+              <li><svg class="ic"><use href="#i-gauge"/></svg><div><b>Otimizar</b><span>Melhorar processos e eficiência.</span></div></li>
+              <li><svg class="ic"><use href="#i-refresh"/></svg><div><b>Reutilizar</b><span>Escalar capabilities existentes.</span></div></li>
+              <li><svg class="ic"><use href="#i-bulb"/></svg><div><b>Inovar</b><span>Criar novas soluções e capabilities.</span></div></li>
+            </ul>
+          </li>
+
+          <!-- 04 · GERAR VALOR -->
+          <li class="vc-step vc-4 reveal">
+            <header><span class="vc-num">04</span><h3>Gerar valor</h3></header>
+            <p class="vc-msg">Transformamos melhoria em resultados de negócio.</p>
+            <ol class="vc-value">
+              <li><b>Capacidade liberada</b><span>Trabalho que deixou de ser necessário para o mesmo resultado.</span></li>
+              <li class="vc-gate">não automático</li>
+              <li><b>Custo evitado</b><span>Custo ou crescimento futuro que foi evitado.</span></li>
+              <li class="vc-gate">não automático</li>
+              <li class="vc-real"><b>Economia realizada</b><span>Custo financeiro efetivamente removido da operação.</span></li>
+            </ol>
+            <p class="vc-guard"><b>Eficiência ≠ economia</b>Só declaramos economia quando existe baseline e realização financeira comprovada.</p>
+          </li>
+        </ol>
+
+        <div class="vc-return reveal" aria-label="Reinvestir: os resultados retroalimentam o modelo">
+          <span class="vc-return-label"><b>↺ Reinvestir</b>Os resultados retroalimentam o modelo, priorizando novas melhorias.</span>
+        </div>
+      </div>
+
+      <div class="vc-outcomes reveal">
+        <div class="vc-out-head"><b>Nem todo valor precisa virar dinheiro.</b><span>Resultados operacionais também são valor, mesmo sem conversão financeira confiável.</span></div>
+        <ul class="tags"><li>↑ SLA</li><li>↓ MTTR</li><li>↑ Qualidade</li><li>↑ Confiabilidade</li><li>↓ Risco</li><li>↑ Experiência</li><li>↑ Velocidade</li><li>↑ Reúso</li></ul>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <!-- =====================================================
+       CAPA · CAPÍTULO 06 · CONCLUSÃO
+       ===================================================== -->
+  <section class="slide slide--cover c-coe" id="cap-06" data-nav="tom" data-title="Capítulo 06 · Conclusão" data-cover>
+    <div class="wrap">
+      <div class="cover">
+        <div class="cover-body">
+          <p class="cover-kicker reveal">Capítulo 06 <span>/ 06</span></p>
+          <h2 class="cover-title reveal">Conclusão</h2>
+          <p class="cover-q reveal">Como tudo funciona junto?</p>
+          <ol class="cover-topics reveal" data-topics="tom"></ol>
+        </div>
+        <span class="cover-num" aria-hidden="true">06</span>
+      </div>
+      <ol class="cover-chapters reveal" data-current="tom" aria-hidden="true"></ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       06 · TRANSFORMATION ROADMAP
+       ===================================================== -->
+  <section class="slide slide--soft" id="transformation-roadmap" data-nav="tom" data-title="Roadmap da transformação">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow eyebrow--transf">06 · Conclusão · Roadmap da transformação</p>
+          <h2>Roadmap da transformação</h2>
+          <p class="sub">Um caminho progressivo de adoção, desenhado para proteger a continuidade enquanto a maturidade aumenta.</p>
+        </div>
+        <span class="mat-tag">Progressão de maturidade · não é um cronograma fixo</span>
+      </div>
+
+      <div class="rm">
+        <ol class="rm-phases">
+          <li class="rm-ph reveal">
+            <span class="rm-num">01</span>
+            <h3>Avaliar</h3>
+            <p class="rm-what">Entender o ecossistema atual.</p>
+            <ul class="tags"><li>Estado atual</li><li>Produtos</li><li>Times</li><li>Processos</li><li>Plataforma</li><li>Delivery</li><li>KPIs</li></ul>
+            <p class="rm-msg">“Entender onde estamos.”</p>
+          </li>
+          <li class="rm-ph reveal">
+            <span class="rm-num">02</span>
+            <h3>Desenhar</h3>
+            <p class="rm-what">Definir o modelo operacional.</p>
+            <ul class="tags"><li>Modelo Operacional do COE</li><li>Support / Sustain</li><li>Governança de delivery</li><li>Modelos de squad</li><li>Ownership</li><li>Padrões</li></ul>
+            <p class="rm-msg">“Definir como queremos operar.”</p>
+          </li>
+          <li class="rm-ph reveal">
+            <span class="rm-num">03</span>
+            <h3>Transição</h3>
+            <p class="rm-what">Ativar o modelo.</p>
+            <ul class="tags"><li>Papéis</li><li>Transferência de conhecimento</li><li>SStudio</li><li>Cadência operacional</li><li>Governança de delivery</li><li>Governança inicial</li></ul>
+            <p class="rm-msg">“Do desenho à operação.”</p>
+          </li>
+          <li class="rm-ph reveal">
+            <span class="rm-num">04</span>
+            <h3>Estabilizar</h3>
+            <p class="rm-what">Medir e melhorar.</p>
+            <ul class="tags"><li>KPIs</li><li>SLAs</li><li>Capacidade</li><li>Qualidade</li><li>Saúde da plataforma</li><li>Fluxo de delivery</li></ul>
+            <p class="rm-msg">“Tornar o modelo previsível.”</p>
+          </li>
+          <li class="rm-ph rm-ph--last reveal">
+            <span class="rm-num">05</span>
+            <h3>Otimizar e inovar</h3>
+            <p class="rm-what">Aumentar o valor continuamente.</p>
+            <ul class="tags"><li>Automação</li><li>AI</li><li>Horizon Capabilities</li><li>Componentes reutilizáveis</li><li>Technical Debt</li><li>Melhoria contínua</li></ul>
+            <p class="rm-msg">“Transformar eficiência em evolução contínua.”</p>
+            <a href="#target-operating-model" class="rm-next">Modelo Operacional Alvo <svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          </li>
+        </ol>
+        <div class="rm-band reveal">Governança · Mensuração · Conhecimento · Gestão da mudança</div>
+      </div>
+
+      <ol class="rm-story reveal">
+        <li>Não propomos uma reorganização big bang.</li>
+        <li>Estabelecemos progressivamente ownership, governança, visibilidade e capabilities.</li>
+        <li>Até que o Modelo Operacional Alvo se torne a forma natural de operar do ecossistema.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       15 · TARGET OPERATING MODEL
+       ===================================================== -->
+  <section class="slide slide--soft" id="target-operating-model" data-nav="tom" data-title="Modelo Operacional Alvo">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">06 · Conclusão · Modelo Operacional Alvo</p>
+          <h2>Como tudo funciona junto.</h2>
+          <p class="sub sub--strong">Um ecossistema. Um modelo de governança. Múltiplas estruturas de execução.</p>
+        </div>
+      </div>
+
+      <div class="tom-layout">
+        <div class="tom reveal" data-wires="tg>ti,tg>tb">
+          <svg class="wires" aria-hidden="true"></svg>
+          <div class="tom-gov"><div class="gov-pill gov-pill--sm" data-node="tg"><span class="gov-icon"><svg class="ic"><use href="#i-compass"/></svg></span><strong>ServiceNow Governance</strong></div></div>
+
+          <div class="tom-row">
+            <article class="tom-coe" data-node="ti">
+              <header><h3>COEI IT</h3><span>ITSM + ITOM + ITAM + Apps</span></header>
+              <div class="tom-mgr">COE Manager · <b>ABI</b></div><div class="tom-core">Architect + Engagement Manager</div>
+              <ul class="tom-lanes">
+                <li class="c-support"><b>Support</b><span>Global → regiões / áreas</span></li>
+                <li class="c-sustain"><b>Sustain</b><span>Global → produtos / regiões</span></li>
+                <li class="c-project"><b>Delivery</b><span>Squads · SStudio · especialistas</span></li>
+              </ul>
+            </article>
+            <article class="tom-coe" data-node="tb">
+              <header><h3>COEI Business</h3><span>CSM + SPM + Apps</span></header>
+              <div class="tom-mgr">COE Manager · <b>ABI</b></div><div class="tom-core">Architect + Engagement Manager</div>
+              <ul class="tom-lanes">
+                <li class="c-support"><b>Support</b><span>Global → regiões / áreas</span></li>
+                <li class="c-sustain"><b>Sustain</b><span>Global → produtos / regiões</span></li>
+                <li class="c-project"><b>Delivery</b><span>Squads · SStudio · especialistas</span></li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="tom-band tom-band--innov">
+            <span class="tb-name"><svg class="ic"><use href="#i-bulb"/></svg>Innovation / Horizon AI<small class="tb-own">Ownership: COEI / Innovation · Consumo: entre domínios</small></span>
+            <span class="tb-items"><i>Horizon AI</i><small style="color:var(--innov);font-size:11.5px;font-weight:700;margin-left:6px;align-self:center;">Understand → Assist → Create → Decide → Act</small></span>
+          </div>
+          <div class="tom-band tom-band--plat">
+            <span class="tb-name"><svg class="ic"><use href="#i-layers"/></svg>Platform Operations &amp; Platform Capabilities<small class="tb-own">Fundação compartilhada e governança técnica</small></span>
+            <span class="tb-items"><i>Flow</i><i>Connect</i><i>Relay</i></span>
+          </div>
+        </div>
+
+        <ul class="tom-legend">
+          <li class="reveal c-core"><b>ServiceNow Governance</b> mantém a direção global com os COE Managers representando seus domínios.</li>
+          <li class="reveal c-coe"><b>COEIs</b> governam o ecossistema do domínio: Support, Sustain e Delivery (visibilidade no SStudio).</li>
+          <li class="reveal c-support"><b>Support</b> escala globalmente sob uma diretriz única.</li>
+          <li class="reveal c-sustain"><b>Sustain</b> escala por produto e região sob uma diretriz única.</li>
+          <li class="reveal c-project"><b>Delivery</b> executa mudanças dentro do COEI: squads flexíveis e visibilidade ponta a ponta no SStudio.</li>
+          <li class="reveal c-plat"><b>Platform Operations &amp; Capabilities</b> (Flow, Connect, Relay) fornecem a fundação, visibilidade, observabilidade e controle técnico.</li>
+          <li class="reveal c-innov"><b>Innovation / Horizon AI</b> transforma dados operacionais em conhecimento, assistência, decisões e automação governada.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       16 · ENCERRAMENTO
+       ===================================================== -->
+  <section class="slide slide--closing" id="closing" data-nav="tom" data-title="Encerramento">
+    <div class="wrap">
+      <div class="closing-head reveal">
+        <h2 class="closing-title">Um modelo de governança. Execução flexível. Visibilidade ponta a ponta. <em>Inovação contínua.</em></h2>
+        <p class="closing-sub">Núcleo estável. Delivery escalável. Operação inteligente.</p>
+      </div>
+
+      <div class="closing-grid">
+      <ol class="closing-keys">
+        <li class="reveal"><span>1</span><p>A <b>Plataforma</b> garante estabilidade.</p></li>
+        <li class="reveal"><span>2</span><p>O <b>COEI</b> governa o delivery e garante inovação.</p></li>
+        <li class="reveal"><span>3</span><p>As <b>squads</b> executam o trabalho.</p></li>
+        <li class="reveal"><span>4</span><p>O <b>SStudio</b> dá visibilidade ponta a ponta.</p></li>
+      </ol>
+      <div class="pillars">
+        <article class="pillar c-core reveal"><span class="pl-icon"><svg class="ic"><use href="#i-compass"/></svg></span><h3>ServiceNow Governance</h3><p>Direção global e decisões estratégicas do ecossistema.</p></article>
+        <article class="pillar c-coe reveal"><span class="pl-icon"><svg class="ic"><use href="#i-target"/></svg></span><h3>COEI &amp; SStudio</h3><p>Governa os domínios com ownership ABI; SStudio fornece visibilidade ponta a ponta sobre o Delivery.</p>
+          <ul class="pl-parts"><li class="c-support">Support <small>opera o domínio</small></li><li class="c-sustain">Sustain <small>evolui o produto</small></li><li class="c-project">Delivery <small>executa mudanças</small></li></ul></article>
+        <article class="pillar c-plat reveal"><span class="pl-icon"><svg class="ic"><use href="#i-layers"/></svg></span><h3>Platform Operations &amp; Capabilities</h3><p>Opera a fundação e fornece visibilidade, observabilidade e controle técnico com Flow, Connect e Relay.</p></article>
+        <article class="pillar c-innov reveal"><span class="pl-icon"><svg class="ic"><use href="#i-bulb"/></svg></span><h3>Innovation / Horizon AI</h3><p>Transforma AI em inteligência operacional, assistência e automação governada (Understand → Act).</p></article>
+      </div>
+      </div>
+
+      <div class="callout c-innov reveal" style="margin-top:24px;text-align:center;justify-content:center;border-left:4px solid var(--innov);background:var(--navy);color:#fff;border-radius:14px;padding:14px 20px;">
+        <p style="font-size:15px;line-height:1.45;"><strong style="color:#8FC3EA;letter-spacing:.04em;">PLATFORM CAPABILITIES PROVIDE VISIBILITY AND CONTROL.</strong> &nbsp;·&nbsp; <strong style="color:#FFA45C;letter-spacing:.04em;">HORIZON AI PROVIDES INTELLIGENCE.</strong><br><span style="color:#C9D8EA;font-size:13.5px;">TOGETHER, THEY CREATE THE FOUNDATION FOR INCREASINGLY INTELLIGENT AND AUTOMATED OPERATIONS.</span></p>
+      </div>
+
+      <img class="closing-logo reveal" src="aoop.png" alt="Aoop — An NTT DATA Company">
+    </div>
+  </section>
+</main>
+
+<!-- ============ MODAIS DE ENTREGÁVEIS ============ -->
+<dialog class="modal modal--wit" id="modal-wit" aria-labelledby="wit-title">
+  <div class="modal-bar">
+    <span class="modal-tag modal-tag--project"><svg class="ic"><use href="#i-list"/></svg>Conteúdo adicional · Delivery · SStudio</span>
+    <button type="button" class="modal-close" data-close aria-label="Fechar"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="modal-body" tabindex="-1" autofocus>
+    <header class="wit-mhead">
+      <h2 id="wit-title">Tipos de item de trabalho</h2>
+      <p>Cada tipo de demanda tem um significado claro: o que é novo, o que corrige e o que melhora.</p>
+    </header>
+      <div class="wit-legend">
+        <span class="wit-tag t-new">Algo novo</span>
+        <span class="wit-tag t-dev">Em desenvolvimento</span>
+        <span class="wit-tag t-prod">Em produção</span>
+      </div>
+
+      <div class="wit-level lv-3">
+        <div class="wit-head"><span class="wf-num">3</span><div><small>Nível de delivery</small><strong>O que precisa ser entregue ou resolvido</strong></div></div>
+        <div class="wit-cards">
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-sparkle"/></svg></span><h3>Feature</h3><span class="wit-tag t-new">Algo novo</span></header>
+            <p>Algo novo sendo desenvolvido.</p>
+          </article>
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-ruler"/></svg></span><h3>Technical Debt</h3><span class="wit-tag t-prod">Em produção</span></header>
+            <p>Algo em produção com uma <strong>boa prática</strong> não cumprida.</p>
+          </article>
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-alert"/></svg></span><h3>Problem</h3><span class="wit-tag t-prod">Em produção</span></header>
+            <p>Algo em produção que não segue uma <strong>regra de negócio</strong> implementada.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="wit-level lv-4">
+        <div class="wit-head"><span class="wf-num">4</span><div><small>Nível de execução técnica</small><strong>Trabalho executável pelas squads</strong></div></div>
+        <div class="wit-cards">
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-file"/></svg></span><h3>User Story</h3><span class="wit-tag t-new">Algo novo</span></header>
+            <p>Incremento de algo novo.</p>
+          </article>
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-bug"/></svg></span><h3>Bug</h3><span class="wit-tag t-dev">Em desenvolvimento</span></header>
+            <p>Correção de um <strong>desenvolvimento em andamento</strong>.</p>
+          </article>
+          <article class="wit">
+            <header><span class="wit-icon"><svg class="ic"><use href="#i-wrench"/></svg></span><h3>Fix</h3><span class="wit-tag t-prod">Em produção</span></header>
+            <p>Correção de um <strong>problema em produção</strong>.</p>
+          </article>
+        </div>
+      </div>
+
+      <p class="wit-msg"><strong>Bug ≠ Fix.</strong> Bug corrige o que ainda está sendo construído; Fix corrige o que já está em produção. <strong>Technical Debt ≠ Problem.</strong> Debt fere uma boa prática; Problem fere uma regra de negócio.</p>
+  </div>
+</dialog>
+
+<dialog class="modal" id="modal-perf" aria-labelledby="perf-title">
+  <div class="modal-bar">
+    <span class="modal-tag"><svg class="ic"><use href="#i-file"/></svg>Exemplo de entregável · Platform Operations</span>
+    <button type="button" class="modal-close" data-close aria-label="Fechar"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+
+  <div class="modal-body" tabindex="-1" autofocus>
+    <div class="pa-delivers">
+      <span class="pa-delivers-label">O que esta análise entrega</span>
+      <ul>
+        <li><svg class="ic"><use href="#i-bars"/></svg>Comparativo objetivo entre instâncias</li>
+        <li><svg class="ic"><use href="#i-target"/></svg>Indicadores-chave em leitura executiva</li>
+        <li><svg class="ic"><use href="#i-globe"/></svg>Hosts e percurso de rede</li>
+        <li><svg class="ic"><use href="#i-book"/></svg>Interpretação dos achados</li>
+        <li><svg class="ic"><use href="#i-shield"/></svg>Limites e fontes declarados</li>
+      </ul>
+    </div>
+
+    <article class="pa">
+      <header class="pa-head">
+        <p class="eyebrow eyebrow--plat">Horizon · Assessment executivo · 01 outubro 2026</p>
+        <h2 id="perf-title">Ambev e ABI: recursos, atividade e latência</h2>
+        <p class="pa-lead">No contexto de relatos de lentidão em flows, import sets e páginas da plataforma, a comparação apresenta maior memória JVM na ABI, acompanhada de mais usuários conectados, maior volume de registros de erro e maior latência no ponto de medição.</p>
+      </header>
+
+      <section class="pa-metrics" aria-label="Indicadores principais de Ambev e ABI">
+        <div class="pa-metric"><strong>38 / 38</strong><span>Nós: Ambev / ABI</span><small>19 com usuários conectados em cada instância</small></div>
+        <div class="pa-metric"><strong>2×</strong><span>memória JVM por nó</span><small>3.926 MB na ABI · 1.963 MB na Ambev</small></div>
+        <div class="pa-metric pa-metric--hl"><strong>30,4×</strong><span>registros de erro no dia¹</span><small>10,46 milhões na ABI · 343,7 mil na Ambev</small></div>
+        <div class="pa-metric pa-metric--hl"><strong>14×</strong><span>latência média de ping²</span><small>199,25 ms na ABI · 14,25 ms na Ambev</small></div>
+      </section>
+
+      <h3 class="pa-h">Comparação dos indicadores</h3>
+      <div class="pa-table-wrap">
+        <table class="pa-table">
+          <thead><tr><th scope="col">Indicador</th><th scope="col">Ambev</th><th scope="col">ABI</th><th scope="col">ABI / Ambev</th></tr></thead>
+          <tbody>
+            <tr><td>Nós listados / com usuários conectados</td><td><strong>38 / 19</strong></td><td><strong>38 / 19</strong></td><td><strong>Mesma quantidade</strong></td></tr>
+            <tr><td>Memória JVM apresentada por nó</td><td>1.963 MB</td><td>3.926 MB</td><td><b class="pa-x">2,0×</b></td></tr>
+            <tr><td>Soma de usuários conectados nos nós</td><td>3.517</td><td>10.614</td><td><b class="pa-x">3,0×</b></td></tr>
+            <tr><td>Registros de erro no dia¹</td><td>343.656</td><td>10.459.809</td><td><b class="pa-x pa-x--hi">30,4×</b></td></tr>
+            <tr><td>Registros em sys_email no dia¹</td><td>27.844</td><td>133.138</td><td><b class="pa-x">4,8×</b></td></tr>
+            <tr><td>Registros em ECC Queue no dia¹</td><td>118.748</td><td>60.318</td><td><b class="pa-x pa-x--lo">0,51×</b></td></tr>
+            <tr><td>Latência média de ping²</td><td>14,25 ms</td><td>199,25 ms</td><td><b class="pa-x pa-x--hi">14,0×</b></td></tr>
+            <tr><td>Banco exibido no Diagnostics</td><td>PostgreSQL 15.17</td><td>PostgreSQL 15.17</td><td>Mesma versão exibida</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pa-cols">
+        <section>
+          <h3 class="pa-h">Hosts e percurso de rede</h3>
+          <div class="pa-route"><b>Ambev · gig101 / gru101</b>Nomenclatura sugere Rio de Janeiro / São Paulo. Nós com usuários no grupo gig101.</div>
+          <div class="pa-route pa-route--far"><b>ABI · dub201 / ams201</b>Nomenclatura sugere Dublin / Amsterdam. Nós com usuários no grupo dub201.</div>
+          <p class="pa-p">A localização é uma <strong>inferência pelos nomes dos hosts</strong>, ainda não confirmada. O traceroute alcançou ambos os destinos, com aproximadamente 199–200 ms para ABI e 14–15 ms para Ambev. A diferença média no ping foi de <strong>185 ms</strong>.</p>
+        </section>
+        <section>
+          <h3 class="pa-h">Leitura dos achados</h3>
+          <p class="pa-p"><strong>Capacidade e atividade.</strong> A ABI tem mais memória JVM por nó, mas a mesma quantidade de nós com usuários e cerca de três vezes o contador de usuários conectados. ECC Queue menor mostra que o aumento de atividade não é uniforme.</p>
+          <p class="pa-p"><strong>Erros.</strong> O volume diário de registros na ABI é 30,4 vezes maior. Essa contagem não representa diretamente solicitações malsucedidas nem identifica a origem dos erros.</p>
+          <p class="pa-p"><strong>RaptorDB.</strong> O time de plataforma informa seu uso na ABI. Como RaptorDB é baseado em PostgreSQL, o rótulo exibido no Diagnostics não contradiz essa informação; também não confirma edição ou funcionalidades habilitadas.</p>
+        </section>
+      </div>
+
+      <p class="pa-limit"><strong>Limite da comparação:</strong> CPU alocada, I/O, capacidade do banco e tempos de execução não constam dos dados apresentados. Maior memória disponível e maior latência de rede, isoladamente, não determinam a causa da lentidão nem comprovam subdimensionamento.</p>
+
+      <footer class="pa-foot">
+        <p><strong>Fontes:</strong> System Diagnostics · ambev.pdf e abinbevww.pdf, exportados em 01/10/2026 com 27 segundos de diferença; contagens e testes fornecidos pelo time. <a href="https://www.servicenow.com/au/company/media/press-room/improve-automation-now-platform.html" target="_blank" rel="noopener">ServiceNow: RaptorDB baseado em PostgreSQL</a>.</p>
+        <p>¹ Contagens informadas para “ontem” (30/09/2026); filtros e fuso de extração não validados. sys_email e ECC Queue indicam registros, não necessariamente envios bem-sucedidos ou backlog. Os logs totais da última hora dos PDFs não foram misturados com os erros diários.</p>
+        <p>² Quatro respostas por destino, em um único ponto de medição. ICMP não mede desempenho de flows/import sets ou carregamento de páginas. Memória JVM não equivale à RAM física; usuários conectados não equivalem a transações simultâneas. A função dos nós sem usuários não foi confirmada.</p>
+      </footer>
+    </article>
+  </div>
+</dialog>
+
+<!-- ============ FLOATING PAGER ============ -->
+<div class="pager" aria-label="Navegação entre slides">
+  <div class="pager-pill">
+    <button class="pg-btn" id="prevBtn" aria-label="Slide anterior"><svg class="ic"><use href="#i-arrow-left"/></svg><span>Anterior</span></button>
+    <div class="pg-info" aria-live="polite">
+      <span class="pg-title" id="pgTitle">Agenda</span>
+      <span class="pg-count"><b id="pgNum">01</b> / <span id="pgTotal">16</span></span>
+      <span class="pg-bar"><i id="pgBar"></i></span>
+    </div>
+    <button class="pg-btn pg-btn--next" id="nextBtn" aria-label="Próximo slide"><span>Próximo</span><svg class="ic"><use href="#i-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

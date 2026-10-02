@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ambev e ABI &#183; Comparativo de performance</title>
+<style>
+.abi-assessment{--ink:#15283b;--muted:#566777;--line:#dce4eb;--accent:#005e75;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;max-width:1080px;margin:24px auto;padding:36px;box-sizing:border-box;line-height:1.45}
+.abi-assessment *{box-sizing:border-box}.abi-assessment .eyebrow{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);margin:0 0 8px}.abi-assessment header{border-bottom:3px solid var(--accent);padding-bottom:18px}.abi-assessment h1{font-size:30px;line-height:1.15;margin:0 0 9px;letter-spacing:-.7px}.abi-assessment .lead{font-size:14px;max-width:940px;margin:0;color:var(--muted)}
+.abi-assessment .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.abi-assessment .metric{background:#f2f6f9;border-top:3px solid var(--accent);padding:15px 18px}.abi-assessment .metric strong{display:block;font-size:34px;line-height:1.1;color:var(--accent)}.abi-assessment .metric span{display:block;font-size:13px;font-weight:700;margin-top:6px}.abi-assessment .metric small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.abi-assessment h2{font-size:15px;margin:19px 0 9px}.abi-assessment .table-wrap{overflow-x:auto}.abi-assessment table{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}.abi-assessment th{background:var(--ink);color:#fff;font-size:11px;text-align:left;padding:9px 10px}.abi-assessment td{border-bottom:1px solid var(--line);padding:7px 10px}.abi-assessment td:not(:first-child){white-space:nowrap}.abi-assessment tbody tr:nth-child(even){background:#f6f8fa}.abi-assessment .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}.abi-assessment .cols p{font-size:12px;margin:7px 0}.abi-assessment .route{background:#f2f6f9;padding:10px 12px;border-left:3px solid var(--accent)}.abi-assessment .route b{display:block}.abi-assessment .closing{font-size:12px;background:#edf4f5;padding:12px 14px;margin-top:15px}.abi-assessment footer{margin-top:15px;padding-top:10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.abi-assessment footer p{margin:4px 0}.abi-assessment a{color:var(--accent)}
+@media(max-width:640px){.abi-assessment{margin:0;padding:20px}.abi-assessment h1{font-size:25px}.abi-assessment .metrics{grid-template-columns:repeat(2,1fr);gap:8px}.abi-assessment .metric{padding:12px 9px}.abi-assessment .metric strong{font-size:27px}.abi-assessment .metric span{font-size:11px}.abi-assessment .cols{grid-template-columns:1fr;gap:0}}
+@media print{@page{size:A4;margin:12mm}.abi-assessment{margin:0;padding:0;max-width:none;line-height:1.3;print-color-adjust:exact;-webkit-print-color-adjust:exact}.abi-assessment h1{font-size:25px}.abi-assessment .metrics{margin:15px 0;gap:10px}.abi-assessment .metric{padding:10px 12px}.abi-assessment .metric strong{font-size:28px}.abi-assessment td{padding:5px 8px}.abi-assessment h2{margin-top:13px}.abi-assessment header,.abi-assessment .metric,.abi-assessment tr,.abi-assessment .cols,.abi-assessment footer{break-inside:avoid}.abi-assessment .table-wrap{overflow:visible}}
+</style>
+</head>
+<body>
+<article class="abi-assessment" aria-labelledby="assessment-title">
+<header><p class="eyebrow">Horizon &#183; Assessment executivo &#183; 01 outubro 2026</p>
+<h1 id="assessment-title">Ambev e ABI: recursos, atividade e lat&#234;ncia</h1>
+<p class="lead">No contexto de relatos de lentid&#227;o em flows, import sets e p&#225;ginas da plataforma, a compara&#231;&#227;o apresenta maior mem&#243;ria JVM na ABI, acompanhada de mais usu&#225;rios conectados, maior volume de registros de erro e maior lat&#234;ncia no ponto de medi&#231;&#227;o.</p></header>
+<section class="metrics" aria-label="Indicadores principais de Ambev e ABI">
+<div class="metric"><strong>38 / 38</strong><span>N&#243;s: Ambev / ABI</span><small>19 com usu&#225;rios conectados em cada inst&#226;ncia</small></div>
+<div class="metric"><strong>2&#215;</strong><span>mem&#243;ria JVM por n&#243;</span><small>3.926 MB na ABI &#183; 1.963 MB na Ambev</small></div>
+<div class="metric"><strong>30,4&#215;</strong><span>registros de erro no dia&#185;</span><small>10,46 milh&#245;es na ABI &#183; 343,7 mil na Ambev</small></div>
+<div class="metric"><strong>14&#215;</strong><span>lat&#234;ncia m&#233;dia de ping&#178;</span><small>199,25 ms na ABI &#183; 14,25 ms na Ambev</small></div>
+</section>
+<h2>Compara&#231;&#227;o dos indicadores</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Indicador</th><th scope="col">Ambev</th><th scope="col">ABI</th><th scope="col">ABI / Ambev</th></tr></thead><tbody>
+<tr><td>N&#243;s listados / com usu&#225;rios conectados</td><td><strong>38 / 19</strong></td><td><strong>38 / 19</strong></td><td><strong>Mesma quantidade</strong></td></tr>
+<tr><td>Mem&#243;ria JVM apresentada por n&#243;</td><td>1.963 MB</td><td>3.926 MB</td><td>2,0&#215;</td></tr>
+<tr><td>Soma de usu&#225;rios conectados nos n&#243;s</td><td>3.517</td><td>10.614</td><td>3,0&#215;</td></tr>
+<tr><td>Registros de erro no dia&#185;</td><td>343.656</td><td>10.459.809</td><td>30,4&#215;</td></tr>
+<tr><td>Registros em sys_email no dia&#185;</td><td>27.844</td><td>133.138</td><td>4,8&#215;</td></tr>
+<tr><td>Registros em ECC Queue no dia&#185;</td><td>118.748</td><td>60.318</td><td>0,51&#215;</td></tr>
+<tr><td>Lat&#234;ncia m&#233;dia de ping&#178;</td><td>14,25 ms</td><td>199,25 ms</td><td>14,0&#215;</td></tr>
+<tr><td>Banco exibido no Diagnostics</td><td>PostgreSQL 15.17</td><td>PostgreSQL 15.17</td><td>Mesma vers&#227;o exibida</td></tr>
+</tbody></table></div>
+<div class="cols">
+<section><h2>Hosts e percurso de rede</h2>
+<p class="route"><b>Ambev &#183; gig101 / gru101</b>Nomenclatura sugere Rio de Janeiro / S&#227;o Paulo.<br>N&#243;s com usu&#225;rios no grupo gig101.</p>
+<p class="route"><b>ABI &#183; dub201 / ams201</b>Nomenclatura sugere Dublin / Amsterdam.<br>N&#243;s com usu&#225;rios no grupo dub201.</p>
+<p>A localiza&#231;&#227;o &#233; uma <strong>infer&#234;ncia pelos nomes dos hosts</strong>, ainda n&#227;o confirmada. O traceroute alcan&#227;ou ambos os destinos, com aproximadamente 199&#8211;200 ms para ABI e 14&#8211;15 ms para Ambev. A diferen&#231;a m&#233;dia no ping foi de <strong>185 ms</strong>.</p>
+</section>
+<section><h2>Leitura dos achados</h2>
+<p><strong>Capacidade e atividade.</strong> A ABI tem mais mem&#243;ria JVM por n&#243;, mas a mesma quantidade de n&#243;s com usu&#225;rios e cerca de tr&#234;s vezes o contador de usu&#225;rios conectados. ECC Queue menor mostra que o aumento de atividade n&#227;o &#233; uniforme.</p>
+<p><strong>Erros.</strong> O volume di&#225;rio de registros na ABI &#233; 30,4 vezes maior. Essa contagem n&#227;o representa diretamente solicita&#231;&#245;es malsucedidas nem identifica a origem dos erros.</p>
+<p><strong>RaptorDB.</strong> O time de plataforma informa seu uso na ABI. Como RaptorDB &#233; baseado em PostgreSQL, o r&#243;tulo exibido no Diagnostics n&#227;o contradiz essa informa&#231;&#227;o; tamb&#233;m n&#227;o confirma edi&#231;&#227;o ou funcionalidades habilitadas.</p>
+</section></div>
+<p class="closing"><strong>Limite da compara&#231;&#227;o:</strong> CPU alocada, I/O, capacidade do banco e tempos de execu&#231;&#227;o n&#227;o constam dos dados apresentados. Maior mem&#243;ria dispon&#237;vel e maior lat&#234;ncia de rede, isoladamente, n&#227;o determinam a causa da lentid&#227;o nem comprovam subdimensionamento.</p>
+<footer>
+<p><strong>Fontes:</strong> System Diagnostics &#183; ambev.pdf e abinbevww.pdf, exportados em 01/10/2026 com 27 segundos de diferen&#231;a; contagens e testes fornecidos pelo time. <a href="https://www.servicenow.com/au/company/media/press-room/improve-automation-now-platform.html">ServiceNow: RaptorDB baseado em PostgreSQL</a>.</p>
+<p>&#185; Contagens informadas para &#8220;ontem&#8221; (30/09/2026); filtros e fuso de extra&#231;&#227;o n&#227;o validados. sys_email e ECC Queue indicam registros, n&#227;o necessariamente envios bem-sucedidos ou backlog. Os logs totais da &#250;ltima hora dos PDFs n&#227;o foram misturados com os erros di&#225;rios.</p>
+<p>&#178; Quatro respostas por destino, em um &#250;nico ponto de medi&#231;&#227;o. ICMP n&#227;o mede desempenho de flows/import sets ou carregamento de p&#225;ginas. Mem&#243;ria JVM n&#227;o equivale &#224; RAM f&#237;sica; usu&#225;rios conectados n&#227;o equivalem a transa&#231;&#245;es simult&#226;neas. A fun&#231;&#227;o dos n&#243;s sem usu&#225;rios n&#227;o foi confirmada.</p>
+</footer></article>
+</body></html>
